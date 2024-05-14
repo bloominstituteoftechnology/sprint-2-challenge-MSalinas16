@@ -6,31 +6,94 @@
   <script id="challenge">
     // 👉 CHALLENGE 1
     function profileActivation(profile, reason) {
-
+if (profile.active && reason) {
+        profile.active = false;
+        profile.reason = reason;
+    }
+    else if (profile.active && !reason) {
+        return "confirm status manually";
+    }
+    else {
+        profile.active = true;
+        delete profile.reason;
+    }
+    return profile;
     }
 
     // 👉 CHALLENGE 2
     function mineSweeper(grid, x, y) {
+      if (x < 1 || x > 3 || y < 1 || y > 3) {
+        return "invalid coordinates";
+    }
+    let square = grid[y - 1][x - 1];
+    if (square === "🟥") {
+        return "🟥 💀";
+    } else {
+        return "🟦 🥳";
+    }
 
     }
 
     // 👉 CHALLENGE 3
     function booleanize(obj) {
+      for (let prop in obj) {
+        if (prop.length > 9) {
+            return "shorten all prop names to 9 chars or less";
+        }
+        if (obj[prop] === 0) {
+            obj[prop] = false;
+        } else if (obj[prop] === 1) {
+            obj[prop] = true;
+        } else if (obj[prop] === null) {
+            delete obj[prop];
+        }
+    }
+    return obj;
 
     }
 
     // 👉 CHALLENGE 4
     function scrub(text, forbidden) {
+       if (text.length === 0 || forbidden.length === 0) {
+        return text;
+    }
+    forbidden.forEach(word => {
+      let regex = new RegExp("\\b" + word + "\\b", "gi");
+      text = text.replace(regex, "x".repeat(word.length));
+    });
+    return text;
 
     }
 
     // 👉 CHALLENGE 5 (bonus, NOT graded)
     function normalizePhoneNumber(num) {
+       if (typeof num !== 'string' || num.length !== 10) {
+        return "Invalid input";
+    }
+    let formattedNumber = "(" + num.substring(0, 3) + ") " + num.substring(3, 6) + "-" + num.substring(6);
+
+    return formattedNumber;
 
     }
 
     // 👉 CHALLENGE 6 (bonus, NOT graded)
     function diceRolls() {
+      let rolls = 0; // Total number of rolls
+    let consecutiveSixes = 0; // Number of consecutive sixes
+
+    while (true) {
+      let roll = Math.floor(Math.random() * 6) + 1;
+      rolls++;
+      if (roll === 6) {
+            consecutiveSixes++;
+            if (consecutiveSixes === 3) {
+                break; 
+              }
+        } else {
+            consecutiveSixes = 0;
+        }
+    }
+    return rolls;
 
     }
 
